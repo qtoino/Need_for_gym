@@ -1,0 +1,186 @@
+2.1.1
+
++----------------------+---------+---------+---------+---------+
+| η                    | a = 0.5 | a = 1   | a = 2   | a = 5   |
++----------------------+---------+---------+---------+---------+
+| .001                 | > 1000  | > 1000  | > 1000  | 990     |
++----------------------+---------+---------+---------+---------+
+| .01                  | 760     | 414     | 223     | 97      |
++----------------------+---------+---------+---------+---------+
+| .03                  | 252     | 137     | 73      | 31      |
++----------------------+---------+---------+---------+---------+
+| .1                   | 75      | 40      | 21      | 8       |
++----------------------+---------+---------+---------+---------+
+| .3                   | 24      | 12      | 5       | 8       |
++----------------------+---------+---------+---------+---------+
+| 1                    | 6       | 1       | > 1000  | div     |
++----------------------+---------+---------+---------+---------+
+| 3                    | 6       | div     | div     | div     |
++----------------------+---------+---------+---------+---------+
+| Fastest              | 2       | 1       | 0.5     | 0.2     |
++----------------------+---------+---------+---------+---------+
+| Divergence threshold | 4.0     | 2.0     | 1.0     | 0.4     |
++----------------------+---------+---------+---------+---------+
+
+2.1.2
+
+A partir de x(n+1) = x(n) - η∇f[x(n)] -> para x(1) = 0 tem-se:
+
+x(1) = x(0) - η∇f[(ax(0)^2)/2] ⇔ 0 = x(0) - ηax(0) ⇔ 0 = x(0)[1-ηa] ⇔ 1/a = η -> Relação de otimização
+
+Experimentalmente também se verifica: 1.0/0.5 = 2.0
+
+2.1.3
+
+A partir de x(n+1) = x(n) - η∇f[x(n)] -> para x(1) = -x(0) tem-se:
+
+x(1) = x(0) - η∇f[(ax(0)^2)/2] ⇔ -x(0) = x(0) - ηax(0) ⇔ 0 = x(0)[2-ηa] ⇔ 2/a = η -> Valor limiar de η para o qual o método diverge
+
+Experimentalmente também se verifica: 2.0/1 = 2.0
+
+
+2.1.4
+
+Para que o algoritmo encontre um minímo da função define-se um passo e um x inicial. 
+De acordo com a fórmula do método de gradiente descendente a próxima iteração do x é encontrado através da multiplicação do passo pelo declive da reta naquele ponto. 
+No caso particular em que o passo é demasido grande, o x(n+1) vai corresponder a x com uma derivada superior à do x inicial, originando um algortimo divergente em vez do convergente.
+Isto pode ser verificado quando η = 3 e a >= 1. Através das relações obtidas acima conseguiu-se prever o resultado extremos (Fastest e Divergence threshold).
+Quando o passo e η são demasiado pequenos, em apenas 1000 iterações não se consegue otimizar a função (chegar ao mínimo).
+
+2.1.5 
+
+Obtemos a otimização mais rápida quando temos apenas 1 step.
+Considerando que existe um mínimo global, para uma qualquer função diferenciável f(x), com a sua derivada f´(x) temos então: x(n+1) = x(n) - η∇f[x(n)]
+Se tivermos x(0) o ponto inicial e x(1) o ponto mínimo: x(1) = x(0) - η∇f[x(0)] ⇔ η = [x(1)-x(0)]/f'[x(0)]
+Conseguimos assim prever que existe um valor de η que otimiza a função no número mínimo de iterações, independentemente do ponto inicial.
+
+2.2.1
+
++----------------------+-------+---------+
+| η                    | a = 2 | a = 20  |
++----------------------+-------+---------+
+| .01                  | 414   | 414     |
++----------------------+-------+---------+
+| .03                  | 137   | 137     |
++----------------------+-------+---------+
+| .1                   | 40    | div     |
++----------------------+-------+---------+
+| .3                   | 12    | div     |
++----------------------+-------+---------+
+| 1                    | div   | div     |
++----------------------+-------+---------+
+| 3                    | div   | div     |
++----------------------+-------+---------+
+| Fastest              | 0.6   | 0.09    |
++----------------------+-------+---------+
+| Divergence threshold | 1     | 0.1     |
++----------------------+-------+---------+
+
+2.2.2
+
+Através dos valores obtidos na tabela observou-se que para a e η mais elevado o método divirge mais facilmente, da mesma forma que quando se usou apenas uma dimensão.
+A abertura do valley é maior quanto maior o valor de a, apenas numa das direções, pois a segunda derivada de x2 é independente do valor de a.
+Como η é um escalar, o vetor associado ao gradiente será mais inclinado na direção de x1 do que de x2. 
+Deste modo, existe um ponto para o qual η se torna demasiado elevado para convergir para o mínimo. 
+Isto ocorre quando x1(n+1) vai corresponder a x com uma derivada superior à do x inicial levando à diverência do algoritmo.
+Desta forma conclui-se que para a mais pequeno o número de iterações diminui, como por exemplo, para a = 1 atingimos o número mínimo de steps que é também 1.
+
+2.2.3 
+
+Contrariamente às conclusões retiradas das funções anteriores, de apenas uma variável, podemos não conseguir chegar a um mínimo em apenas uma iteração, a partir de um qualquer x(0). 
+Isto acontece porque ao termos um único η a multiplicar pelo vector associado ao step este vai ser proporcional em ambas as direções. 
+A não ser que a função seja simétrica, a primeira iteração nunca será o mínimo.
+
+
+3.1
+
++----------------------+--------+--------+--------+--------+---------+
+| η                    | α = 0  | α = .5 | α = .7 | α = .9 | α = .95 |
++----------------------+--------+--------+--------+--------+---------+
+| .003                 | > 1000 | > 1000 | > 1000 | > 1000 | > 1000  |
++----------------------+--------+--------+--------+--------+---------+
+| .01                  | 414    | 411    | 406    | 382    | 338     |
++----------------------+--------+--------+--------+--------+---------+
+| .03                  | 137    | 134    | 129    | 96     | 171     |
++----------------------+--------+--------+--------+--------+---------+
+| .1                   | div    | 36     | 31     | 85     | 122     |
++----------------------+--------+--------+--------+--------+---------+
+| .3                   | div    | div    | 31     | 67     | 148     |
++----------------------+--------+--------+--------+--------+---------+
+| 1                    | div    | div    | div    | 74     | 146     |
++----------------------+--------+--------+--------+--------+---------+
+| 3                    | div    | div    | div    | div    | 172     |
++----------------------+--------+--------+--------+--------+---------+
+| 10                   | div    | div    | div    | div    | div     |
++----------------------+--------+--------+--------+--------+---------+
+| Divergence threshold | 0.1    | 0.3    | 0.57   | 1.9    | 3.9     |
++----------------------+--------+--------+--------+--------+---------+
+
+3.2
+
+Através da tabela observou-se que para α maiores, maior terá que ser o η para que o método se torne divergente. Para η menor quanto maior for α menos iterações são necessárias para chegar ao mínimo. 
+No caso de η maiores a condição anterior é vericada, para α maiores, até que a "velocidade" que o impulso dá ao step se torna demasiado elevada, "ultrapassando" assim o mínimo e originando um maior número de iterações.
+Desta forma o caso ideal é obtido com termos intermédios de η e de α, que neste caso é η = [0.1, 0.3] e α = 0.7.
+
+4.1
+
++--------------+---+-------------------+------+------+------+-----+-----+
+| N. of tests  | α | η -> 0.00968      | -20% | -10% | Best | 10% | 20% |
++--------------+---+-------------------+------+------+------+-----+-----+
+| 12           |   | N. of interations | 125  | 144  | 108  | 141 | 138 |
++--------------+---+-------------------+------+------+------+-----+-----+
+
+
+4.2
+
+Em funções mais complexas do que as estudadas anteriormente, ou seja com os mesmos parâmetros de controlo mas com uma maior assimetria, torna-se mais difícil atingir um valor ideal. 
+Isto acontece porque o sistema é mais sensível às alterações dos parâmetros η e α. 
+Para o processo de tentativa e erro, para encontrar o mínimo de iterações, fixou-se o valor de α e variou-se o η até encontrar um valor abaixo de 200 iterações, e cujos valores de -20%, -10%, 10% e 20% fossem maiores que o valor ideial. 
+Repetiu-se o processo até se obter o valor representado na tabela.
+
+4.3
+
++------+-------+--------+--------+--------+---------+---------+
+| η    | α = 0 | α = .5 | α = .7 | α = .9 | α = .95 | α = .99 |
++------+-------+--------+--------+--------+---------+---------+
+| .001 | 401   | 215    | 171    | 101    | 160     | 158     |
++------+-------+--------+--------+--------+---------+---------+
+| .01  | 384   | 201    | 168    | 165    | 145     | 139     |
++------+-------+--------+--------+--------+---------+---------+
+| .1   | 575   | 306    | 159    | 149    | 138     | 144     |
++------+-------+--------+--------+--------+---------+---------+
+| 1    | 522   | 305    | 169    | 135    | 132     | 123     |
++------+-------+--------+--------+--------+---------+---------+
+| 10   | 470   | 292    | 190    | 146    | 113     | 108     |
++------+-------+--------+--------+--------+---------+---------+
+
+
+4.4
+
++-----------------------------+--------------+------------------+------+------------------+
+|                             | N. of testes | η                | α    | N. of iterations |
++-----------------------------+--------------+------------------+------+------------------+
+|                             |              | -10%             |      | 460              |
+|                             |              +------------------+      +------------------+
+| Without adaptive step sizes | 12           | final η = 0.0179 | 0.97 | 144              |
+|                             |              +------------------+      +------------------+
+|                             |              | +10%             |      | 313              |
++-----------------------------+--------------+------------------+------+------------------+
+|                             |              | -10%             |      | 276              |
+|                             |              +------------------+      +------------------+
+| With adaptive step sizes    | 5            | final η = 0.022  | 0.94 | 222              |
+|                             |              +------------------+      +------------------+
+|                             |              | +10%             |      | 266              |
++-----------------------------+--------------+------------------+------+------------------+
+
+
+5.
+
+Através da análise das diferentes tabelas e diferentes métodos conclui-se que para funções muito simples, como de uma dimensão, o gradient descent method é bastante eficiente a nível de iterações e fácil de implementar. 
+Contudo para funções mais complexas, como de duas dimensões, torna-se pouco eficiente e pode até nunca chegar a encontrar o mínimo em apenas uma iteração. 
+Para além destas questões apresenta ainda uma grande depêndencia de η, sendo difícil encontrar um adequado, e caso encontre um mínimo local não encontrará o mínimo global pretendido.
+
+Para os outros dois métodos em estudo (Momentum term e Adaptive step sizes) percebe-se que o Momentum term é mais eficiente a nível de número de iterações. 
+Por outro lado quando se aumenta o η e α este começa a divergir muito facilmente. Isto ocorre pois este método é muito sensível a pequenas variações tornando-se muito pouco prático encontrar o η e α adequado para a função em causa.
+
+Por estas razões o que mais se destaca é o Adaptive step sizes visto que foi o único que nunca divergiu, para os valores em estudo, e não apresenta nenhum dos problemas dos métodos referidos acima. 
